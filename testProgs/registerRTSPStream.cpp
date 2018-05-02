@@ -25,6 +25,7 @@ char const* programName;
 UsageEnvironment* env;
 
 Boolean requestStreamingViaTCP = False;
+Boolean requestStreamingViaHTTP = False;
 char const* username = NULL;
 char const* password = NULL;
 
@@ -36,7 +37,7 @@ void registerResponseHandler(RTSPClient* rtspClient, int resultCode, char* resul
 }
 
 void usage() {
-  *env << "usage: " << programName << " [-t] [-u <username> <password>] "
+  *env << "usage: " << programName << " [-t|-T] [-u <username> <password>] "
     "<remote-client-or-proxy-server-name-or-address> <remote-client-or-proxy-server-port-number> <rtsp-URL-to-register>"
     " [proxy-URL-suffix]\n";
   exit(1);
@@ -56,6 +57,10 @@ int main(int argc, char const** argv) {
     switch (opt[1]) {
       case 't': { // ask the remote client to access the stream via TCP instead of UDP
 	requestStreamingViaTCP = True;
+	break;
+      }
+      case 'T': { // ask the remote client to access the stream via HTTP
+	requestStreamingViaHTTP = True;
 	break;
       }
 
@@ -92,7 +97,7 @@ int main(int argc, char const** argv) {
 
   RTSPRegisterSender::createNew(*env, remoteClientNameOrAddress, remoteClientPortNum, rtspURLToRegister,
 				registerResponseHandler, ourAuthenticator,
-				requestStreamingViaTCP, proxyURLSuffix, False/*reuseConnection*/,
+				requestStreamingViaTCP, requestStreamingViaHTTP, proxyURLSuffix, False/*reuseConnection*/,
 				1/*verbosityLevel*/, programName);
       // Note: This object will be deleted later, by the response handler
 

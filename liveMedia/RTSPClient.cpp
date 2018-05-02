@@ -2021,7 +2021,7 @@ Boolean HandlerServerForREGISTERCommand
 void HandlerServerForREGISTERCommand
 ::implementCmd_REGISTER(char const* cmd/*"REGISTER" or "DEREGISTER"*/,
 			char const* url, char const* urlSuffix, int socketToRemoteServer,
-			Boolean deliverViaTCP, char const* /*proxyURLSuffix*/) {
+			Boolean deliverViaTCP, Boolean deliverViaHTTP, char const* /*proxyURLSuffix*/) {
   if (strcmp(cmd, "REGISTER") == 0) { // By default, we don't implement "DEREGISTER"
     // Create a new "RTSPClient" object, and call our 'creation function' with it:
     RTSPClient* newRTSPClient = createNewRTSPClient(url, fVerbosityLevel, fApplicationName, socketToRemoteServer);

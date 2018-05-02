@@ -793,11 +793,11 @@ void RTSPServer::RTSPClientConnection::handleRequestBytes(int newBytesRead) {
 	char* url = strDupSize((char*)fRequestBuffer);
 	if (sscanf((char*)fRequestBuffer, "%*s %s", url) == 1) {
 	  // Check for special command-specific parameters in a "Transport:" header:
-	  Boolean reuseConnection, deliverViaTCP;
+	  Boolean reuseConnection, deliverViaTCP, deliverViaHTTP;
 	  char* proxyURLSuffix;
-	  parseTransportHeaderForREGISTER((const char*)fRequestBuffer, reuseConnection, deliverViaTCP, proxyURLSuffix);
+	  parseTransportHeaderForREGISTER((const char*)fRequestBuffer, reuseConnection, deliverViaTCP, deliverViaHTTP, proxyURLSuffix);
 
-	  handleCmd_REGISTER(cmdName, url, urlSuffix, (char const*)fRequestBuffer, reuseConnection, deliverViaTCP, proxyURLSuffix);
+	  handleCmd_REGISTER(cmdName, url, urlSuffix, (char const*)fRequestBuffer, reuseConnection, deliverViaTCP, deliverViaHTTP, proxyURLSuffix);
 	  delete[] proxyURLSuffix;
 	} else {
 	  handleCmd_bad();
