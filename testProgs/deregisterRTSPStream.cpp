@@ -78,7 +78,7 @@ int main(int argc, char const** argv) {
 
   char const* rtspURLToDeregister = argv[3];
 
-  char const* proxyURLSuffix = argc == 4 ? argv[4] : NULL;
+  char const* proxyURLSuffix = argc == 5 ? argv[4] : NULL;
 
   Authenticator* ourAuthenticator = username == NULL ? NULL : new Authenticator(username, password);
 
