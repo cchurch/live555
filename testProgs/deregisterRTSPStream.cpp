@@ -27,10 +27,16 @@ char const* username = NULL;
 char const* password = NULL;
 
 void deregisterResponseHandler(RTSPClient* rtspClient, int resultCode, char* resultString) {
+  UsageEnvironment& env2 = rtspClient->envir(); // alias
+
+  if (resultCode != 0) {
+    env2 << "REGISTER Failed: " << resultString << "\n";
+  }
+
   Medium::close(rtspClient);
 
   // We're done:
-  exit(0);
+  exit(resultCode == 0 ? 0 : 1);
 }
 
 void usage() {
